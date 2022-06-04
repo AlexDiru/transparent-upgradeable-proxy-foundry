@@ -21,6 +21,15 @@ contract Greeter2 {
   }
 }
 
+contract Greeter3 {
+  event Greet(string);
+
+  function greet() public returns (uint, uint) {
+    emit Greet("Hai hai");
+    return (3, 1000);
+  }
+}
+
 // contract Greeter3 {
 //   function greet(string memory _name) public pure returns (string memory) {
 //     return string.concat("Hi ", _name);
