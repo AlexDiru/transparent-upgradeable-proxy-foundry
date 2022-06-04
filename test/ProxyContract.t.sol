@@ -26,6 +26,14 @@ contract MyGreeterTest is Test {
     assertFalse(sent);
   }
 
+  function testNonAdminCannotUpgrade() public {
+    address newImpl = address(new Greeter2());
+
+    vm.prank(address(1));
+    vm.expectRevert();
+    myGreeter.upgradeTo(newImpl);
+  }
+
   function testGreeter1Impl() public {
     vm.prank(address(1));
     vm.expectEmit(false, false, false, true);
