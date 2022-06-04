@@ -30,21 +30,25 @@ contract Greeter3 {
   }
 }
 
-// contract Greeter3 {
-//   function greet(string memory _name) public pure returns (string memory) {
-//     return string.concat("Hi ", _name);
-//   }
-// }
+contract Greeter4 {
+  event GreetNumeric(int);
+  event GreetName(string);
 
-// contract Greeter4 {
-//   function greet() public pure returns (int) {
-//     return 69;
-//   }
+  struct GreetResponse {
+    address caller;
+    int value;
+  }
 
-//   function greetOld(string memory _name) public pure returns (string memory) {
-//     return string.concat("Hi ", _name);
-//   } 
-// }
+  function greet(int _value) public returns (GreetResponse memory) {
+    emit GreetNumeric(_value);
+    return GreetResponse(msg.sender, _value);
+  }
+
+  function greetName(string memory _name) public returns (uint) {
+    emit GreetName(string.concat("Hi ", _name));
+    return 4;
+  } 
+}
 
 contract MyGreeter is TransparentUpgradeableProxy {
   constructor(address _logic, address _admin, bytes memory _data) TransparentUpgradeableProxy(_logic, _admin, _data) {
