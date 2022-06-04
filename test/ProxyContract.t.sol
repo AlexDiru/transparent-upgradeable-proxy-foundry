@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import "src/ProxyContract.sol";
 import "forge-std/Test.sol";
 import "forge-std/Vm.sol";
-import "lib/solidity-bytes-utils/contracts/BytesLib.sol";
+import "solidity-bytes-utils/BytesLib.sol";
 
 contract MyGreeterTest is Test {
   event Greet(string);
@@ -20,8 +20,9 @@ contract MyGreeterTest is Test {
       myGreeter = new MyGreeter(address(greeter1), admin, abi.encode());
     }
 
-    function adminCannotFallback() public {
-      (bool sent, bytes memory data) = address(myGreeter).call{value: 0}(abi.encodeWithSignature("greet()"));
+    function testAdminCannotFallback() public {
+      (bool sent, /*bytes memory data*/) = address(myGreeter).call{value: 0}(abi.encodeWithSignature("greet()"));
+      assertFalse(sent);
     }
 
     function testGreeter1Impl() public {
